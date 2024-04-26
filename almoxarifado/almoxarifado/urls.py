@@ -16,7 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import path, re_path
+from ferramentas.views import FerramentaViewSet
+
+ferramenta_list = FerramentaViewSet.as_view({'get': 'list', 'post': 'create'})
+ferramenta_url = re_path(r'^ferramentas/$', ferramenta_list, name='ferramenta-list')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+] + [ferramenta_url]
