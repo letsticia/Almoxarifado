@@ -17,19 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import path, re_path
-from ferramentas.views import FerramentaViewSet, FerramentaEstoqueViewSet
+from ferramentas.views import FerramentaViewSet
 from funcionario.views import FuncionarioViewSet
 
 ferramenta_list = FerramentaViewSet.as_view({'get': 'list', 'post': 'create'})
 ferramenta_url = re_path(r'^ferramentas/$', ferramenta_list, name='ferramenta-list')
-
-ferramenta_estoque_list = FerramentaEstoqueViewSet.as_view({'get': 'list', 'post': 'create'})
-ferramenta_estoque_url = re_path(r'^estoque/$', ferramenta_estoque_list, name='ferramenta-estoque-list')
 
 funcionario_list = FuncionarioViewSet.as_view({'get': 'list', 'post': 'create'})
 funcionario_url = re_path(r'^funcionarios/$', funcionario_list, name='funcionario-list')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-] + [ferramenta_url] + [ferramenta_estoque_url] + [funcionario_url]
+] + [ferramenta_url] + [funcionario_url]
 
