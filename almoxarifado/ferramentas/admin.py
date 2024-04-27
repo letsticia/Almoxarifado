@@ -1,7 +1,6 @@
 from django.contrib import admin
-from ferramentas.models import Ferramenta, FerramentaEstoque
+from ferramentas.models import Ferramenta
 
 # Register your models here.
 
 admin.site.register(Ferramenta)
-admin.site.register(FerramentaEstoque)
