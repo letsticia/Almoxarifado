@@ -6,7 +6,14 @@ from funcionario.api.serializers import FuncionarioSerializer
 class LogSaidaSerializer(serializers.ModelSerializer):
     class Meta:
         model = LogSaida
-        fields = '__all__'
+        fields = ['ferramenta', 'funcionario', 'quantidade', 'data']
+    
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response['ferramenta'] = FerramentaSerializer(instance.ferramenta).data
+        response['funcionario'] = FuncionarioSerializer(instance.funcionario).data
+        response['entregue'] = instance.entregue
+        return response
 
 
 class LogEntradaSerializer(serializers.ModelSerializer):
