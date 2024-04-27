@@ -19,6 +19,7 @@ from django.urls import path
 from django.urls import path, re_path
 from ferramentas.views import FerramentaViewSet
 from funcionario.views import FuncionarioViewSet
+from estoque.views import LogSaidaViewSet, LogEntradaViewSet
 
 ferramenta_list = FerramentaViewSet.as_view({'get': 'list', 'post': 'create'})
 ferramenta_url = re_path(r'^ferramentas/$', ferramenta_list, name='ferramenta-list')
@@ -26,7 +27,13 @@ ferramenta_url = re_path(r'^ferramentas/$', ferramenta_list, name='ferramenta-li
 funcionario_list = FuncionarioViewSet.as_view({'get': 'list', 'post': 'create'})
 funcionario_url = re_path(r'^funcionarios/$', funcionario_list, name='funcionario-list')
 
+saida_list = LogSaidaViewSet.as_view({'get': 'list', 'post': 'create'})
+saida_url = re_path(r'^saida/$', saida_list, name='saida-list')
+
+entrada_list = LogEntradaViewSet.as_view({'get': 'list', 'post': 'create'})
+entrada_url = re_path(r'^entrada/$', entrada_list, name='entrada-list')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-] + [ferramenta_url] + [funcionario_url]
+] + [ferramenta_url] + [funcionario_url] + [entrada_url] + [saida_url]
 

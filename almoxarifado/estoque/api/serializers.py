@@ -1,0 +1,24 @@
+from rest_framework import serializers
+from estoque.models import LogSaida, LogEntrada
+from ferramentas.api.serializers import FerramentaSerializer
+from funcionario.api.serializers import FuncionarioSerializer
+
+class LogSaidaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LogSaida
+        fields = '__all__'
+
+
+class LogEntradaSerializer(serializers.ModelSerializer):
+    LogSaida = serializers.PrimaryKeyRelatedField(queryset=LogSaida.objects.all())
+
+    class Meta:
+        model = LogEntrada
+        fields = ['LogSaida']
+    
+    def to_representation(self, instance):
+        self.fields['LogSaida'] = serializers.PrimaryKeyRelatedField(queryset=LogSaida.objects.filter(entregue=False))
+        response = super().to_representation(instance)
+        response['ferramenta'] = FerramentaSerializer(instance.LogSaida.ferramenta).data
+        response['funcionario'] = FuncionarioSerializer(instance.LogSaida.funcionario).data
+        return response
